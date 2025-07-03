@@ -14,7 +14,7 @@ const getAll = async (req, res) => {
   }
 };
 
-
+//Función para buscar examen en especifico en base a su ID (Útil cuando son muchas prestaciones)
 const getById = async (req, res) => {
   try {
     const conn = getConnection();
@@ -28,6 +28,8 @@ const getById = async (req, res) => {
   }
 };
 
+
+//Función con la cual creamos (agregamos) un examen a nuestra lista de prestaciones
 const create = async (req, res) => {
   const { name, modality, description } = req.body;
   if (!name) return res.status(400).json({ message: 'Nombre del examen es requerido' });
@@ -44,6 +46,7 @@ const create = async (req, res) => {
   }
 };
 
+//Función que nos permitira actualizar los examenes
 const update = async (req, res) => {
   const { name, modality, description } = req.body;
   try {
@@ -63,6 +66,8 @@ const update = async (req, res) => {
   }
 };
 
+
+//Función para poder remover los examenes (Útil ya que hay prestaciones realizadas por un solo médico)
 const remove = async (req, res) => {
   try {
     const conn = getConnection();
