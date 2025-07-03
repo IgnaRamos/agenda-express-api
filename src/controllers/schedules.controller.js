@@ -148,6 +148,7 @@ const updateSchedule = async (req, res) => {
 
 const removeSchedule = async (req, res) => {
   const { id } = req.params;
+  const { notes } = req.body;
 
   try {
     const conn = getConnection();
@@ -162,7 +163,7 @@ const removeSchedule = async (req, res) => {
     await conn.query(
       `INSERT INTO schedule_history (schedule_id, change_by, old_status, new_status, notes)
        VALUES (?, ?, ?, ?, ?)`,
-      [id, req.user.id, oldStatus, newStatus, 'Cancelado por agendador y registrado en historial']
+      [id, req.user.id, oldStatus, newStatus, notes]
     );
 
     res.json({ message: 'Cita cancelada correctamente' });
