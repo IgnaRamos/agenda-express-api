@@ -43,7 +43,7 @@ const updatePatient = async (req, res) => {
     const updates = [];
     const values = [];
 
-    if (phone !== undefined) {
+    if (phone !== undefined) { //Condiciones que nos permitiran poder actualizar campos de manera indepeniente (no es necesario actaulizar ambos)
       updates.push('phone = ?');
       values.push(phone);
     }
