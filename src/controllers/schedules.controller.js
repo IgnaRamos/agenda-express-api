@@ -137,17 +137,7 @@ const updateSchedule = async (req, res) => {
       WHERE s.id = ?
     `, [id]);
 
-    // Si cambió el status se inserta en historial
-    if (status && status !== oldStatus) {
-      await conn.query(`
-        INSERT INTO schedule_history (schedule_id, change_by, old_status, new_status, notes)
-        VALUES (?, ?, ?, ?, ?)
-      `, [id, req.user.id, oldStatus, status, notes || null]);
-
-      return res.json({ message: 'Cita actualizada y registrada en historial', updated });
-    }
-
-   //Si no cambia status
+   
     res.json({ message: 'Cita actualizada', updated });
 
   } catch (err) {
