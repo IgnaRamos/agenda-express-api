@@ -4,7 +4,7 @@ const sendError = (res, err) =>
   res.status(500).json({ message: 'Error en la base de datos', error: err });
 
 
-//Fúncion que permite acceder al historial del paciente en base a su rut 
+//Fúncion que permite acceder al historial del paciente en base a su rut y ver todos los cambios de citas y motivos.
 const getHistoryByRut = async (req, res) => {
   const { rut } = req.params;
   try {
@@ -26,6 +26,7 @@ const getHistoryByRut = async (req, res) => {
   }
 };
 
+//Función que nos permite acceder a las citas del paciente.
 const getSchedulesByRut = async (req, res) => {
   const { rut } = req.params;
   try {
@@ -49,6 +50,7 @@ const getSchedulesByRut = async (req, res) => {
   }
 };
 
+//Función que nos permite agendar examenes para los pacientes
 const createSchedule = async (req, res) => {
   const { rut } = req.params;
   const { exam_id, date } = req.body;
@@ -88,11 +90,11 @@ const createSchedule = async (req, res) => {
   }
 };
 
-
+//Función que nos permite actualizar las citas de los pacientes y registrar en el historial
 const updateSchedule = async (req, res) => {
   const { id } = req.params;
   // Extraemos indication_id con let para permitir reasignarlo
-  const { exam_id, date, status, notes } = req.body;
+  const { exam_id, date, status} = req.body;
   let { indication_id } = req.body;
 
   try {
@@ -145,7 +147,7 @@ const updateSchedule = async (req, res) => {
   }
 };
 
-
+//Función para cancelar citas
 const removeSchedule = async (req, res) => {
   const { id } = req.params;
   const { notes } = req.body;
@@ -172,7 +174,7 @@ const removeSchedule = async (req, res) => {
   }
 };
 
-
+//Función que nos entregara el comprobante con todos los datos del paciente, la escripcion del examen y su indicación.
 const getExamConfirmation = async (req, res) => {
   const { rut } = req.params;
 
