@@ -3,6 +3,8 @@ const { getConnection } = require('../db');
 const sendError = (res, err) =>
   res.status(500).json({ message: 'Error en la base de datos', error: err });
 
+
+//Fúncion que permite acceder al historial del paciente en base a su rut 
 const getHistoryByRut = async (req, res) => {
   const { rut } = req.params;
   try {
@@ -102,7 +104,7 @@ const updateSchedule = async (req, res) => {
 
     const oldStatus = oldData.status;
 
-    // Si no recibimos indication_id, pero sí exam_id diferente, buscar la indicación correcta
+    // Si no recibimos indication_id, pero si exam_id diferente, buscar la indicación correcta
     if ((!indication_id || indication_id === null) && exam_id && exam_id !== oldData.exam_id) {
       const [[indication]] = await conn.query('SELECT indication_id FROM exam_indications WHERE exam_id = ?', [exam_id]);
       indication_id = indication?.indication_id || null;
@@ -170,7 +172,7 @@ const removeSchedule = async (req, res) => {
     await conn.query(
       `INSERT INTO schedule_history (schedule_id, change_by, old_status, new_status, notes)
        VALUES (?, ?, ?, ?, ?)`,
-      [id, req.user.id, oldStatus, newStatus, 'Cancelado por agendador']
+      [id, req.user.id, oldStatus, newStatus, 'Cancelado por agendador y registrado en historial']
     );
 
     res.json({ message: 'Cita cancelada correctamente' });
