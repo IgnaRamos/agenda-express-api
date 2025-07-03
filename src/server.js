@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -14,7 +13,7 @@ const examIndicationRoutes = require('./routes/examIndication.routes');
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('API Agenda Médica funcionando');
