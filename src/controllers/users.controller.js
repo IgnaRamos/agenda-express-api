@@ -13,6 +13,7 @@ const getRoleId = async (roleName) => {
   return rows[0].id;
 };
 
+//función para obtener todos los usuarios
 const getAll = async (req, res) => {
   try {
     const conn = getConnection();
@@ -25,6 +26,7 @@ const getAll = async (req, res) => {
   }
 };
 
+//función que muestra al usuario por su id
 const getById = async (req, res) => {
   try {
     const conn = getConnection();
@@ -36,6 +38,7 @@ const getById = async (req, res) => {
   }
 };
 
+//funcion para crear usuarios
 const create = async (req, res) => {
   try {
     const { username, password, role } = req.body;
@@ -43,7 +46,7 @@ const create = async (req, res) => {
       return res.status(400).json({ message: 'Nombre de usuario, contraseña y rol son requeridos' });
 
     const roleId = await getRoleId(role);
-    const hash = bcrypt.hashSync(password, 10);
+    const hash = bcrypt.hashSync(password, 10); //hasheo de password
 
     const conn = getConnection();
     const [result] = await conn.query(
@@ -61,6 +64,7 @@ const create = async (req, res) => {
   }
 };
 
+//Funcion que permite actuazlizar a los usuarios (cambiar nombre, rol y pass)
 const update = async (req, res) => {
   try {
     const { username, password, role } = req.body;
@@ -100,6 +104,7 @@ const update = async (req, res) => {
   }
 };
 
+//funcion para eliminar usuarios
 const remove = async (req, res) => {
   try {
     const conn = getConnection();
