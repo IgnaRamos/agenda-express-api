@@ -3,6 +3,7 @@ const { getConnection } = require('../db');
 const sendError = (res, err) =>
     res.status(500).json({ message: 'Error en la base de datos', error: err});
 
+//Función que nos permitira obtener todas las indicaciones disponibles.
 const getAll = async (req, res) => {
     try {
       const conn = getConnection();
@@ -13,6 +14,7 @@ const getAll = async (req, res) => {
     }            
 };
 
+//Función que nos permitira obtener la función en base a su ID (Útil para prevenir errores al momento de asignar indicacion-examen)
 const getById = async (req, res) => {
     try {
       const conn = getConnection();
@@ -26,6 +28,7 @@ const getById = async (req, res) => {
     }
 };
 
+//Función para crear indicaciones
 const create = async (req, res) => {
     const { content } = req.body;
     try {
@@ -40,6 +43,7 @@ const create = async (req, res) => {
     }
 };
 
+//Función para actualizar las indicaciones
 const update = async (req, res) => {
     const { content } = req.body;
     try {
@@ -59,6 +63,7 @@ const update = async (req, res) => {
     }
 };
 
+//Funcion para eliminar indicaciones(Útil para prevenir errores cuando sean indicaciones de prestaciones que ya no se realizan)
 const remove = async (req, res) => {
     try {
         const conn = getConnection();
