@@ -1,15 +1,17 @@
 const { getConnection } = require('../db');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs'); //Dependencia para hasheo de contraseñas
+const jwt = require('jsonwebtoken'); //Dependencia para diferenciar roles a través de la generación de un token
 require('dotenv').config();
 
+
+//Función para autenticarse con nombre de usuario y password 
 const login = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password)
     return res.status(400).json({ message: 'Faltan datos para iniciar sesión' });
 
   try {
-    const conn = getConnection(); //  OBTIENE la conexión
+    const conn = getConnection(); //Autenticamos dependiendo del rol que tenga asignado el usuario, lo que ayudara a limitar el acceso a tareas definidas para ESE usuario.
     const [results] = await conn.query(
       `SELECT users.id, username, password_hash, roles.rol as role
        FROM users JOIN roles ON users.role_id = roles.id
@@ -28,12 +30,12 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '8h' }
+      { expiresIn: '8h' } //Establecemos que nuestro token dde autenticación tenga validez de 8 horas (posterior a ese tiempo se debe logear denuevo).
     );
 
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ message: 'Error en la consulta', error: err.message });
+    res.status(500).json({ message: 'Error en la consulta', error: err.message }); //Mensaje de error definido durante el desarrollo
   }
 };
 
