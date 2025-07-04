@@ -46,7 +46,7 @@ const create = async (req, res) => {
   }
 };
 
-//Función que permitira actualizar los examenes
+//Función permitira actualizar los examenes
 const update = async (req, res) => {
   const { name, modality, description } = req.body;
   try {
