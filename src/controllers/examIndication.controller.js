@@ -1,7 +1,7 @@
 const { getConnection } = require('../db');
 
 
-//Función que nos permite poder enlazar una misma indicación a un a muchos examenes
+//Función que permite poder enlazar una misma indicación a un a muchos examenes
 const addExamIndication = async (req, res) => {
   const { exam_id, indication_id } = req.body;
 
