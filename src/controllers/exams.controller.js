@@ -29,7 +29,7 @@ const getById = async (req, res) => {
 };
 
 
-//Función con la cual creamos (agregamos) un examen a nuestra lista de prestaciones
+//Función con la cual se agregan examenes
 const create = async (req, res) => {
   const { name, modality, description } = req.body;
   if (!name) return res.status(400).json({ message: 'Nombre del examen es requerido' });
@@ -46,7 +46,7 @@ const create = async (req, res) => {
   }
 };
 
-//Función que nos permitira actualizar los examenes
+//Función que permitira actualizar los examenes
 const update = async (req, res) => {
   const { name, modality, description } = req.body;
   try {
