@@ -27,7 +27,7 @@ const getHistoryByRut = async (req, res) => {
   }
 };
 
-//Función que nos permite acceder a las citas pendientes del paciente
+//Función que permite acceder a las citas pendientes del paciente
 const getSchedulesByRut = async (req, res) => {
   const { rut } = req.params;
   try {
@@ -51,7 +51,7 @@ const getSchedulesByRut = async (req, res) => {
   }
 };
 
-//Función que nos permite agendar examenes para los pacientes
+//Función que permite agendar examenes para los pacientes
 const createSchedule = async (req, res) => {
   const { rut } = req.params;
   const { exam_id, date } = req.body;
@@ -69,7 +69,7 @@ const createSchedule = async (req, res) => {
 
     const patientId = patients[0].id;
 
-    //Buscamos la indicación relacionada al examen
+    //Buscar la indicación relacionada al examen
     const [[indication]] = await conn.query(
       'SELECT indication_id FROM exam_indications WHERE exam_id = ?',
       [exam_id]
@@ -81,7 +81,7 @@ const createSchedule = async (req, res) => {
     const [result] = await conn.query(
       `INSERT INTO schedules (patient_id, exam_id, indication_id, date, created_by)
        VALUES (?, ?, ?, ?, ?)`,
-      [patientId, exam_id, date, req.user.id]
+      [patientId, exam_id, indicationId, date, req.user.id]
     );
 
     res.status(201).json({ message: 'Cita creada', id: result.insertId });
@@ -91,7 +91,7 @@ const createSchedule = async (req, res) => {
   }
 };
 
-//Función que nos permite actualizar las citas de los pacientes y registrar en el historial
+//Función que permite actualizar las citas de los pacientes y registrar en el historial
 const updateSchedule = async (req, res) => {
   const { id } = req.params;
   // Extraemos indication_id con let para permitir reasignarlo
@@ -107,7 +107,7 @@ const updateSchedule = async (req, res) => {
 
     const oldStatus = oldData.status;
 
-    // Si no recibimos indication_id, pero si exam_id diferente, buscar la indicación correcta
+    // Condición que permite que si se cambia el exam_id busque la indicacion corresponiente
     if ((!indication_id || indication_id === null) && exam_id && exam_id !== oldData.exam_id) {
       const [[indication]] = await conn.query('SELECT indication_id FROM exam_indications WHERE exam_id = ?', [exam_id]);
       indication_id = indication?.indication_id || null;
@@ -117,7 +117,7 @@ const updateSchedule = async (req, res) => {
       indication_id = oldData.indication_id;
     }
 
-    // Actualizar con COALESCE para conservar valores no actualizados
+    // Actualizar con COALESCE para conservar los campos que no fueron actualizados
     await conn.query(`
       UPDATE schedules 
       SET exam_id = COALESCE(?, exam_id),
@@ -159,6 +159,10 @@ const removeSchedule = async (req, res) => {
     if (!row) return res.status(404).json({ message: 'Cita no encontrada' });
 
     const oldStatus = row.status;
+
+    if(oldStatus === 'cancelled'){
+      return res.status(400).json({ message: 'Cita fue cancelada anteriormente'});
+    }
     const newStatus = 'cancelled';
 
     await conn.query('UPDATE schedules SET status = ? WHERE id = ?', [newStatus, id]);
