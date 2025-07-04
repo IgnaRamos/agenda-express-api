@@ -11,7 +11,7 @@ const login = async (req, res) => {
     return res.status(400).json({ message: 'Faltan datos para iniciar sesión' });
 
   try {
-    const conn = getConnection(); //Autenticamos dependiendo del rol que tenga asignado el usuario, lo que ayudara a limitar el acceso a tareas definidas para ESE usuario.
+    const conn = getConnection(); //Autentica dependiendo del rol que tenga asignado el usuario, lo que ayudara a limitar el acceso a tareas definidas para ESE usuario.
     const [results] = await conn.query(
       `SELECT users.id, username, password_hash, roles.rol as role
        FROM users JOIN roles ON users.role_id = roles.id
@@ -30,7 +30,7 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '8h' } //Establecemos que nuestro token dde autenticación tenga validez de 8 horas (posterior a ese tiempo se debe logear denuevo).
+      { expiresIn: '8h' } //Establece token dde autenticación tenga validez de 8 horas (posterior a ese tiempo se debe logear denuevo).
     );
 
     res.json({ token });
