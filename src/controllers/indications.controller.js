@@ -14,7 +14,7 @@ const getAll = async (req, res) => {
     }            
 };
 
-//Función que nos permitira obtener la función en base a su ID (Útil para prevenir errores al momento de asignar indicacion-examen)
+//Función que permitira obtener la indicación en base a su ID (Útil para prevenir errores al momento de asignar indicacion-examen)
 const getById = async (req, res) => {
     try {
       const conn = getConnection();
