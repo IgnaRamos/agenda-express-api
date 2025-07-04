@@ -19,6 +19,7 @@ const getHistoryByRut = async (req, res) => {
         JOIN patients  p ON s.patient_id   = p.id
       WHERE p.rut = ?
       AND sh.new_status = 'cancelled'
+      AND sh.new_status = 'confirmed'
       ORDER BY sh.changed DESC
     `, [rut]);
     res.json(rows);
@@ -27,7 +28,7 @@ const getHistoryByRut = async (req, res) => {
   }
 };
 
-//Función que nos permite acceder a la última cita del paciente
+//Función que nos permite acceder a las citas pendientes del paciente
 const getSchedulesByRut = async (req, res) => {
   const { rut } = req.params;
   try {
