@@ -4,7 +4,7 @@ const sendError = (res, err) =>
   res.status(500).json({ message: 'Error en la base de datos', error: err });
 
 
-//Fúncion que permite acceder al historial del paciente en base a su rut y ver todos los cambios de citas y motivos.
+//Fúncion que permite acceder al historial del paciente en base a su rut y ver las citas canceladas y su motivo (Útil para trazabilidad)
 const getHistoryByRut = async (req, res) => {
   const { rut } = req.params;
   try {
@@ -37,9 +37,8 @@ const getSchedulesByRut = async (req, res) => {
       FROM schedules s
         JOIN exams e ON s.exam_id = e.id
         JOIN patients p ON s.patient_id = p.id
-      WHERE p.rut = ?
-      ORDER BY s.date DESC
-      LIMIT 1;
+      WHERE p.rut = ? AND s.status = 'pending'
+      ORDER BY s.date DESC;
     `, [rut]);
 
     if (rows.length === 0) {
