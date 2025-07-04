@@ -38,6 +38,7 @@ const getSchedulesByRut = async (req, res) => {
         JOIN patients p ON s.patient_id = p.id
       WHERE p.rut = ?
       ORDER BY s.date DESC
+      LIMIT 1;
     `, [rut]);
 
     if (rows.length === 0) {
