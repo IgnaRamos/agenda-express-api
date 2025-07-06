@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken, isAdmin } = require('../middleware/auth');
+const { verifyToken, isAdmin, isScheduler } = require('../middleware/auth');
 const examsCtrl = require('../controllers/exams.controller');
 
-router.use(verifyToken, isAdmin);
+router.use(verifyToken, isAdmin, isScheduler);
 
 router.get('/', examsCtrl.getAll);
 router.get('/:id', examsCtrl.getById);
