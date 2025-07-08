@@ -101,4 +101,4 @@ const removePatient = async (req, res) => {
   }
 };
 
-module.exports = {getByRut, createPatient, updatePatient, removePatient };
+module.exports = {getByRut, createPatient, updatePatient, removePatient, getAll };
