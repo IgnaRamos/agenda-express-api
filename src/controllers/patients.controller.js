@@ -4,6 +4,16 @@ const { getConnection } = require('../db');
 const sendError = (res, err) =>
   res.status(500).json({ message: 'Error en la base de datos', error: err });
 
+const getAll = async (req, res) => {
+    try {
+      const conn = getConnection();
+      const [rows] = await conn.query(`SELECT * FROM patients`);
+      res.json(rows);  
+    } catch (err) {
+        sendError(res,err);
+    }            
+};
+
 //Función para obtener pacientes por rut(admin)
 const getByRut = async (req, res) => {
   try {
