@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const patientsCtrl = require('../controllers/patients.controller');
-const { verifyToken, isAdmin } = require('../middleware/auth');
+const { verifyToken, isAdmin, isScheduler } = require('../middleware/auth');
 
 router.use(verifyToken, isAdmin);
+router.use(verifyToken, isScheduler);
 
 router.get('/', patientsCtrl.getAll)
 router.get('/:rut', patientsCtrl.getByRut);
