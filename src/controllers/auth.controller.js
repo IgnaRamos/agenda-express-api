@@ -30,7 +30,7 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '2h' } //Establece token dde autenticación tenga validez de 8 horas (posterior a ese tiempo se debe logear denuevo).
+      { expiresIn: '2h' } //Establece token dde autenticación tenga validez de 2 horas (posterior a ese tiempo se debe logear denuevo).
     );
 
     res.json({ token });
