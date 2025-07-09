@@ -36,13 +36,19 @@ const create = async (req, res) => {
 
   try {
     const conn = getConnection();
+    console.log('conexion correcta')
     const [result] = await conn.query(
       'INSERT INTO exams (name, modality, description) VALUES (?, ?, ?)',
       [name, modality || null, description || null]
     );
+    console.log('insert hecho')
     res.status(201).json({ id: result.insertId, name, modality, description });
   } catch (err) {
-    sendError(res, err);
+    res.status(500).json({ 
+      message: 'Error interno al crear examen',
+      error: err.message,           // Muestra el mensaje de error
+      stack: err.stack              // Muestra el detalle del error
+    });
   }
 };
 
