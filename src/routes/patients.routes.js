@@ -7,7 +7,6 @@ router.use(verifyToken, isAdmin);
 
 
 router.get('/', patientsCtrl.getAll)
-router.get('/:rut', patientsCtrl.getByRut);
 router.post('/', patientsCtrl.createPatient);
 router.put('/:rut', patientsCtrl.updatePatient);
 router.delete('/:rut', patientsCtrl.removePatient);
