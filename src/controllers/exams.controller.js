@@ -15,7 +15,7 @@ const getAll = async (req, res) => {
 };
 
 //Función para buscar examen en especifico en base a su ID (Útil cuando son muchas prestaciones)
-const getById = async (req, res) => {
+/*const getById = async (req, res) => {
   try {
     const conn = getConnection();
     const [rows] = await conn.query('SELECT * FROM exams WHERE id = ?', [req.params.id]);
@@ -26,7 +26,7 @@ const getById = async (req, res) => {
   } catch (err) {
     sendError(res, err);
   }
-};
+};*/
 
 
 //Función con la cual se agregan examenes
