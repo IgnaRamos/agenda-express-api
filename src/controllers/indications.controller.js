@@ -15,7 +15,7 @@ const getAll = async (req, res) => {
 };
 
 //Función que permitira obtener la indicación en base a su ID (Útil para prevenir errores al momento de asignar indicacion-examen)
-const getById = async (req, res) => {
+/*const getById = async (req, res) => {
     try {
       const conn = getConnection();
       const [rows] = await conn.query('SELECT * FROM indications WHERE id = ?', [req.params.id]);
@@ -26,7 +26,7 @@ const getById = async (req, res) => {
     } catch (err) {
         sendError(res, err);
     }
-};
+};*/
 
 //Función para crear indicaciones
 const create = async (req, res) => {
@@ -80,4 +80,4 @@ const remove = async (req, res) => {
     
 };
 
-module.exports = { getAll, getById, create, update, remove};
+module.exports = { getAll, create, update, remove};
