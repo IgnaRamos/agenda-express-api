@@ -6,7 +6,6 @@ const indicationCtrl = require('../controllers/indications.controller');
 router.use(verifyToken, isAdmin);
 
 router.get('/',  indicationCtrl.getAll);
-router.get('/:id', indicationCtrl.getById);
 router.post('/', indicationCtrl.create);
 router.put('/:id', indicationCtrl.update);
 router.delete('/:id', indicationCtrl.remove);
