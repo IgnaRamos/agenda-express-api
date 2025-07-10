@@ -6,7 +6,6 @@ const examsCtrl = require('../controllers/exams.controller');
 router.use(verifyToken, isAdmin);
 
 router.get('/', examsCtrl.getAll);
-router.get('/:id', examsCtrl.getById);
 router.post('/', examsCtrl.create);
 router.put('/:id', examsCtrl.update);
 router.delete('/:id', examsCtrl.remove);
