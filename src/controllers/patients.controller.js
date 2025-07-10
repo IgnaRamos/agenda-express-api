@@ -15,7 +15,7 @@ const getAll = async (req, res) => {
 };
 
 //Función para obtener pacientes por rut(admin)
-const getByRut = async (req, res) => {
+/*const getByRut = async (req, res) => {
   try {
     const conn = getConnection();
     const [rows] = await conn.query('SELECT * FROM patients WHERE rut = ?', [req.params.rut]);
@@ -26,7 +26,7 @@ const getByRut = async (req, res) => {
   } catch (err) {
     sendError(res, err);
   }
-}
+}*/
 
 // Función para crear paciente(admin)
 const createPatient = async (req, res) => {
@@ -101,4 +101,4 @@ const removePatient = async (req, res) => {
   }
 };
 
-module.exports = {getByRut, createPatient, updatePatient, removePatient, getAll };
+module.exports = { createPatient, updatePatient, removePatient, getAll };
