@@ -18,7 +18,7 @@ const getHistoryByRut = async (req, res) => {
         JOIN exams     e ON s.exam_id      = e.id
         JOIN patients  p ON s.patient_id   = p.id
       WHERE p.rut = ?
-      AND sh.new_status = 'cancelled'
+      AND (sh.new_status = 'cancelled' OR sh.new_status = 'confirmed')
       ORDER BY sh.changed DESC
     `, [rut]);
     res.json(rows);
@@ -91,7 +91,7 @@ const createSchedule = async (req, res) => {
   }
 };
 
-//Función que permite actualizar las citas de los pacientes y registrar en el historial
+//Función que permite actualizar las citas de los pacientes, confirmar su realización para trzabilidad y registrar en el historial
 const updateSchedule = async (req, res) => {
   const { id } = req.params;
   // Extraemos indication_id con let para permitir reasignarlo
