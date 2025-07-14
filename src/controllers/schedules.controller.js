@@ -18,7 +18,7 @@ const getHistoryByRut = async (req, res) => {
         JOIN exams     e ON s.exam_id      = e.id
         JOIN patients  p ON s.patient_id   = p.id
       WHERE p.rut = ?
-      AND (sh.new_status = 'cancelled' OR sh.new_status = 'pending') 
+      AND sh.new_status = 'cancelled'
       ORDER BY sh.changed DESC
     `, [rut]);
     res.json(rows);
