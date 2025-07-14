@@ -130,7 +130,7 @@ const updateSchedule = async (req, res) => {
     // Obtener datos actualizados y devuelve respuesta
     const [[updated]] = await conn.query(`
       SELECT s.id,
-             DATE_FORMAT(s.date, '%Y-%m-%d %H:%i') AS date,
+             DATE_FORMAT(s.date, '%d-%m-%Y %H:%i') AS date,
              s.status,
              e.name AS exam_name,
              COALESCE(i.content, 'Sin indicaciones') AS indication
