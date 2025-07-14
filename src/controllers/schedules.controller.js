@@ -4,7 +4,7 @@ const sendError = (res, err) =>
   res.status(500).json({ message: 'Error en la base de datos', error: err });
 
 
-//Fúncion que permite acceder al historial del paciente en base a su rut y ver las citas canceladas y su motivo (Útil para trazabilidad)
+//Fúncion que permite acceder al historial del paciente en base a su rut, ver las citas realizadas y canceladas junto a su motivo (Útil para trazabilidad)
 const getHistoryByRut = async (req, res) => {
   const { rut } = req.params;
   try {
